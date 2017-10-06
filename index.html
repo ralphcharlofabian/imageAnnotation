@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="app">
+<head>
+    <title>Image Markup</title>
+    <script src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/paper-core.js"></script>
+    <script src="js/paper-core.min.js"></script>
+    <script src="js/paper-full.js"></script>
+    <script src="js/paper-full.min.js"></script>
+    <link href="css/image-markup.css" rel="stylesheet" />
+    <link href="contextMenu/jquery.contextMenu.css" rel="stylesheet" />
+</head>
+<body ng-controller="AppCtrl as vm">
+
+    <input ng-model="vm.imgSrc" value="exam/bg.jpg">
+    <br />
+
+    <div>
+        <img-annotator img-src="vm.imgSrc"></img-annotator>
+
+    </div>
+
+    <script src="js/CommandManager.js"></script>
+    <script type="text/javascript" src="contextMenu/jquery.contextMenu.js"></script>
+    <script type="text/javascript" src="contextMenu/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="js/image-markup.js"></script>
+    <!--
+    <script type="text/javascript">
+        var markup = $('.img-container img').imageMarkup({ color: 'red', width: 4, opacity: .5 });
+    </script>
+-->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="imgAnnotator.js"></script>
+    <script src="image-annotation-thumbnail.js"></script>
+    <script src="default.js"></script>
+
+</body>
+</html>

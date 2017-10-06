@@ -1,0 +1,86 @@
+<section>
+	<pre>{{drawingMode|json}}</pre>
+	<button ng-click="undo()">Undo</button>
+	<button ng-click="redo()">Redo</button>
+	<button ng-click="setPenColor('black')">Black Pen</button>
+	<button ng-click="setPenColor('red')">Red Pen</button>
+	<button ng-click="erase()">Erase</button>
+	<button ng-click="circle()">Circle</button>
+    <button ng-click="rectangle()">Rectangle</button>
+	<button ng-click="textAnno()">Text</button>
+	<button ng-click="moveAnno()">Move</button>
+	<button ng-click="exportToJSON()">Export to JSON</button>
+	<button ng-init="shouldFlat = false" ng-click="shouldFlat = true">Flatten</button>
+	<image-annotation-thumbnail ng-if="shouldFlat" original-image={{imgSrc}} path="annotationPath" output-src="outputSrc"></image-annotation-thumbnail>
+	<pre>OUTPUT SRC: {{outputSrc|json}}</pre>
+	<pre>IMG: {{img|json}}</pre>
+    <img ng-init="outputSrc=null" ng-src="{{outputSrc}}"/>
+    <!-- Shape Property Tools -->
+     <div style="float: left; position:absolute;z-index:999; padding:20px;background:pink" ng-if="showPropertyTools">
+   
+        <label><input ng-model="rect_a.size" ng-change="strokeChange()" name="textSize" type="radio" value="12">Extra Small</label>
+        <label><input ng-model="rect_a.size" ng-change="strokeChange()" name="textSize" type="radio" value="16">Small</label>
+        <label><input ng-model="rect_a.size" ng-change="strokeChange()" name="textSize" type="radio" value="20">Normal</label>
+        <label><input ng-model="rect_a.size" ng-change="strokeChange()" name="textSize" type="radio" value="24">Large</label>
+        <label><input ng-model="rect_a.size" ng-change="strokeChange()" name="textSize" type="radio" value="28">Extra Large</label>
+
+        <br/>
+        <label><input ng-model="rect_a.strokeColor" ng-change="strokeColorChange()" name="strokeColor" type="radio" value="black">black</label>
+        <label><input ng-model="rect_a.strokeColor" ng-change="strokeColorChange()" name="strokeColor" type="radio" value="white">white</label>
+        <label><input ng-model="rect_a.strokeColor" ng-change="strokeColorChange()" name="strokeColor" type="radio" value="blue">blue</label>
+        <label><input ng-model="rect_a.strokeColor" ng-change="strokeColorChange()" name="strokeColor" type="radio" value="red">red</label>
+        <label><input ng-model="rect_a.strokeColor" ng-change="strokeColorChange()" name="strokeColor" type="radio" value="yellow">yellow</label>
+        <label><input ng-model="rect_a.strokeColor" ng-change="strokeColorChange()" name="strokeColor" type="radio" value="green">green</label>
+        <label><input ng-model="rect_a.strokeColor" ng-change="strokeColorChange()" name="strokeColor" type="radio" value="pink">pink</label>
+         
+    </div>
+    
+</section>
+<div class="img-container" style="display: inline-block; float: left">
+	<img ng-src="{{imgSrc}}" img-annotator-img id="imageId"/>
+	<canvas  id="canvasId" img-annotator-canvas style="position: absolute; top: 0; left: 0;" 
+					ng-class="{'cursor-pen': drawingMode=='pen',
+											'cursor-erase': drawingMode=='erase',
+											'cursor-text': drawingMode=='text',
+											'cursor-move': drawingMode=='move'}"></canvas>
+</div>
+<div style="float: left" ng-if="showPropertyWindow">
+	<h2>Text Properties</h2>
+	<label><input ng-model="text.fontSize" ng-change="textChange()" name="textSize" type="radio" value="12">Extra Small</label>
+	<label><input ng-model="text.fontSize" ng-change="textChange()" name="textSize" type="radio" value="16">Small</label>
+	<label><input ng-model="text.fontSize" ng-change="textChange()" name="textSize" type="radio" value="20" checked="checked">Normal</label>
+	<label><input ng-model="text.fontSize" ng-change="textChange()" name="textSize" type="radio" value="24">Large</label>
+	<label><input ng-model="text.fontSize" ng-change="textChange()" name="textSize" type="radio" value="28">Extra Large</label>
+	<textarea ng-model="text.content" ng-change="textChange()" placeholder="Value"  style="width: 50%"></textarea>
+	<select ng-model="textProperty.fillColor" ng-change="textChange()" required ng-options = 'option.value as option.name for option in textOptions' style="width: 50%">	</select>
+	<label ng-repeat="color in colors" for="{{color}}"><input ng-model="text.fillColor" ng-change="textChange()" name="textColor" type="radio" id="{{color}}" ng-value="color">{{color}}</label>
+
+
+
+</div>
+
+
+<div style="float: left" ng-if="showStrokePropertyWindow">
+	<h2>Stroke Properties</h2>
+	<select ng-model="strokeProperty.width" required ng-options = 'option.value as option.name for option in strokeOptions' style="width: 50%">	</select>
+
+
+</div>
+
+<style>
+	.cursor-pen {
+		cursor: url(img/black-pen.png) 14 50, auto
+	}
+	
+	.cursor-erase {
+		cursor: url(contextMenu/images/erase.png) 14 50, auto;
+	}
+
+	.cursor-text {
+		cursor: url(contextMenu/images/text.png) 14 50, auto;
+	}
+     
+	.cursor-move {
+		cursor: url(img/hand-open.png) 14 50, auto;
+	}
+</style>
